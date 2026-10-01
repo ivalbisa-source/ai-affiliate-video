@@ -11,9 +11,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Extract and inspect
+      - name: Inspect Files
         run: |
           mkdir project
           unzip -q AffiliateCam-Android.zip -d project
-          echo "=== DAFTAR SEMUA FILE DALAM ZIP ==="
-          find project -maxdepth 3
+          echo "### Daftar File Proyek:" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          find project -maxdepth 3 >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
