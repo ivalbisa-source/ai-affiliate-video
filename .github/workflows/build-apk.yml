@@ -14,8 +14,8 @@ jobs:
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
-          distribution: 'temurin'
-          java-version: '17'
+         distribution: 'temurin'
+         java-version: '17'
 
       - name: Extract Project
         run: |
@@ -27,18 +27,11 @@ jobs:
           cd project/AffiliateCam-Android
           gradle wrapper --gradle-version 8.2 --distribution-type bin
           chmod +x gradlew
-          ./gradlew assembleDebug --no-daemon --stacktrace 2>&1 | tee build.log || BUILD_FAILED=true
-          
-          if [ "$BUILD_FAILED" = "true" ]; then
-            echo "### Pesan Error Kompilasi:" >> $GITHUB_STEP_SUMMARY
-            echo '```text' >> $GITHUB_STEP_SUMMARY
-            grep -E "FAILURE|error:|Exception" -A 10 build.log | tail -n 40 >> $GITHUB_STEP_SUMMARY
-            echo '```' >> $GITHUB_STEP_SUMMARY
-            exit 1
-          fi
+          ./gradlew assembleDebug --no-daemon
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: AffiliateCam-APK
-          path: project/AffiliateCam-Android/app/build/outputs/apk/debug/*.apk
+         name: AffiliateCam-APK
+         path: '**/*.apk'
+         
