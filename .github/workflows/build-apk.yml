@@ -25,10 +25,10 @@ jobs:
       - name: Generate Wrapper & Build APK
         run: |
           cd project/AffiliateCam-Android
-          gradle wrapper --gradle-version 8.2 --distribution-type bin
+          # Gunakan Gradle versi 8.9 sesuai syarat minimum proyek
+          gradle wrapper --gradle-version 8.9 --distribution-type bin
           chmod +x gradlew
           
-          # Jalankan build dan rekam log ke file
           set +e
           ./gradlew assembleDebug --no-daemon > build_log.txt 2>&1
           STATUS=$?
