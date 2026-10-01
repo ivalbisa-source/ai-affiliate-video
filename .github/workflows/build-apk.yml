@@ -11,35 +11,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Java
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin'
-          java-version: '17'
-
-      - name: Extract Android project
+      - name: Extract and inspect
         run: |
           mkdir project
           unzip -q AffiliateCam-Android.zip -d project
-
-      - name: Find Gradle project
-        run: |
-          find project -name gradlew -type f -exec chmod +x {} \;
-
-      - name: Build APK
-        run: |
-          GRADLEW=$(find project -name gradlew -type f | head -n 1)
-          if [ -z "$GRADLEW" ]; then
-            echo "gradlew tidak ditemukan"
-            exit 1
-          fi
-          cd "$(dirname "$GRADLEW")"
-          chmod +x gradlew
-          ./gradlew assembleDebug
-
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: AffiliateCam-APK
-          path: |
-            project/**/build/outputs/apk/**/*.apk
+          echo "=== DAFTAR SEMUA FILE DALAM ZIP ==="
+          find project -maxdepth 3
