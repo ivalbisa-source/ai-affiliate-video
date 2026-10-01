@@ -14,7 +14,7 @@ jobs:
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
-          distribution: temurin
+          distribution: 'temurin'
           java-version: '17'
 
       - name: Extract Android project
@@ -26,16 +26,16 @@ jobs:
         run: |
           find project -name gradlew -type f -exec chmod +x {} \;
 
-      - - name: Build APK
-  run: |
-    GRADLEW=$(find project -name gradlew -type f | head -n 1)
-    if [ -z "$GRADLEW" ]; then
-      echo "gradlew tidak ditemukan"
-      exit 1
-    fi
-    cd "$(dirname "$GRADLEW")"
-    chmod +x gradlew
-    ./gradlew assembleDebug
+      - name: Build APK
+        run: |
+          GRADLEW=$(find project -name gradlew -type f | head -n 1)
+          if [ -z "$GRADLEW" ]; then
+            echo "gradlew tidak ditemukan"
+            exit 1
+          fi
+          cd "$(dirname "$GRADLEW")"
+          chmod +x gradlew
+          ./gradlew assembleDebug
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
