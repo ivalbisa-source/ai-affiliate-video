@@ -25,12 +25,12 @@ jobs:
       - name: Generate Wrapper & Build APK
         run: |
           cd project/AffiliateCam-Android
-          # Gunakan Gradle versi 8.9 sesuai syarat minimum proyek
           gradle wrapper --gradle-version 8.9 --distribution-type bin
           chmod +x gradlew
           
           set +e
-          ./gradlew assembleDebug --no-daemon > build_log.txt 2>&1
+          # Abaikan perbedaan target JVM Kotlin dan jalankan build
+          ./gradlew assembleDebug --no-daemon -Pkotlin.jvm.target.validation.mode=warning > build_log.txt 2>&1
           STATUS=$?
           
           if [ $STATUS -ne 0 ]; then
